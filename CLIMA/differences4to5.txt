@@ -1,0 +1,82 @@
+2,20c2,62
+< 190:c A. Zsom
+< 207:c A. Zsom: the input_comp file contains the water and O3 initial mixing ratios needed for the climate code.
+< 277:C A. Zsom: the first 4 lines are deleted from the input_clima.dat
+< 311:c A. Zsom: i got rid of the format 502.
+< 323:c A. Zsom: a check of N2
+< 363:c. A. Zsom bug fix solint should be here not flux
+< 382:c A. Zsom: initiating the temperature and water profile when the code is called first
+< 384:c Zsom: reading the input_comp.dat file
+< 388:c A. Zsom	  
+< 429:c A. Zsom: if ncouple eq 1, we initialize the water profile using cgprofile. 
+< 432:c A. Zsom: reading the input_comp.dat file
+< 436:c A. Zsom	
+< 464:c A. Zsom
+< 597:c A. Zsom: Sid's heat capacities
+< 839:c A. Zsom: Water recalculation after the temperature is smoothed. this was missing before
+< 896:c A. Zsom
+< 925:c A. Zsom (03.28.2011): changed the format of the clima_allout.tab to
+< 927:c 20.04.2011 A. Zsom: changed the format a bit again.
+< 1080:c Zsom
+---
+> 127:c A. Zsom: cloud water path      
+> 129:c A. Zsom: for flux averaging the cloudy and no-cloud fluxes
+> 204:c A. Zsom
+> 221:c A. Zsom: the input_comp file contains the water and O3 initial mixing ratios needed for the climate code.
+> 291:C A. Zsom: the first 4 lines are deleted from the input_clima.dat
+> 316:c A. Zsom: if ND=600, we read in mixing_ratios_ini.dat
+> 338:c A. Zsom: i got rid of the format 502.
+> 350:c A. Zsom: a check of N2
+> 390:c A. Zsom: bug fix: SOLINT should be here, not FLUXC.        
+> 396:c A. Zsom: bug fix: SOLUV should be here, not FLUXUV.        
+> 418:c A. Zsom: initiating the temperature and water profile when the code is called first
+> 430:c Zsom: reading the input_comp.dat file
+> 434:c A. Zsom	  
+> 475:c A. Zsom: if ncouple eq 1, we initialize the water profile using cgprofile. 
+> 488:c A. Zsom	
+> 578:c A. Zsom: Sid's heat capacities
+> 606:c A. Zsom: water from cold trap to top in the MC runs
+> 646:c A. Zsom: moved into the main loop
+> 668:c A. Zsom: calculating the cloudy IR fluxes for C1 c
+> 674:c A. Zsom: generating the cloud file for RRTM:
+> 676:c A. Zsom: INFLAG, ICEFLAG, LIQFLAG parameters
+> 683:c A. Zsom: writing the cloud layer infos:
+> 696:c A. Zsom: calculating the cloud water path
+> 751:c A. Zsom: calculating the cloudy IR fluxes for C2 c
+> 757:c A. Zsom: generating the cloud file for RRTM:
+> 759:c A. Zsom: INFLAG, ICEFLAG, LIQFLAG parameters
+> 812:c A. Zsom: calculating the cloudy IR fluxes for CO c
+> 818:c A. Zsom: generating the cloud file for RRTM:
+> 820:c A. Zsom: INFLAG, ICEFLAG, LIQFLAG parameters
+> 867:c A. Zsom: calculating the cloud-free IR fluxes c
+> 890:c A. Zsom: calculating the cloudy solar fluxes for C1 c
+> 908:c A. Zsom: restoring the PARTICLES array to its original value
+> 917:c A. Zsom: calculating the cloudy solar fluxes for C2 c
+> 935:c A. Zsom: restoring the PARTICLES array to its original value
+> 943:c A. Zsom: calculating the cloudy solar fluxes for CO c
+> 952:c A. Zsom: restoring the PARTICLES array to its original value
+> 960:c A. Zsom: calculating the cloud-free solar fluxes c
+> 968:c A. Zsom: restoring the PARTICLES array to its original value
+> 989:c A. Zsom: averaging the fluxes and weighting with the cloud coverage c
+> 1028:c A. Zsom: adaptive time stepping. if the time step if too large,goto here and 
+> 1054:c A. Zsom: adaptive time stepping here.
+> 1072:c A. Zsom: writing the fluxes for calculating the global energy budget
+> 1205:c A. Zsom: save old JCOLD
+> 1229:c A. Zsom: modification to avoid too low convective zone due to the heating on the cloud top	     
+> 1264:c A. Zsom: JCOLD test
+> 1278:c A. Zsom: the new water profile is the weighted average of clear sky and cloudy sky water profiles
+> 1279:c A. Zsom: i turned it off as the Manabe&Wetherald water profile is a global average.
+> 1293:c A. Zsom      
+> 1310:c A. Zsom: we need this in the MC runs.
+> 1351:c A. Zsom: DIVF should be abs.      
+> 1364:c A. Zsom: Water recalculation after the temperature is smoothed. this was missing before
+> 1421:c A. Zsom
+> 1427:c A. Zsom: bug hunting
+> 1443:c A. Zsom: original values: 0.01, 0.001, 0.02
+> 1458:c A. Zsom: writing the output_T_ALB.dat file:
+> 1479:c A. Zsom (03.28.2011): changed the format of the clima_allout.tab to
+> 1481:c 20.04.2011 A. Zsom: changed the format a bit again.
+> 1574:c A. Zsom: conditions when to stop the code:	
+> 1575:c A. Zsom: this condition for Earth is never fulfilled because the clear sky surface temperature
+> 1580:c A. Zsom: if the temperature at the cloud top is less than -40 C, the liquid droplets would freeze.		
+> 1659:c Zsom

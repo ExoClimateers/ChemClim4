@@ -1,0 +1,9 @@
+# surface temperature as a function of cloud height with rdrop=10 micron, npart=100.
+cdeck	ctop	Tsurf
+0	0	294.98
+1	4	277.14
+2	5	276.38
+3	6	276.10
+4	7	276.31
+5	8	274.72
+6	9	274.67

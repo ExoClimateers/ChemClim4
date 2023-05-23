@@ -1,0 +1,168 @@
+       PROGRAM SPECTRA_CLIMA
+C
+C-KK   This program reads the data of the stellar flux at the distance
+C-KK   of the star, scales it to the proper values for an Earth-like planet,
+C-KK   and bins the data in a form usable by the climate code.
+C-KK
+
+c NS is the number of rows that should be skipped in the star flux file
+c in order to read the NF that contain  the useful wavelengths
+      PARAMETER(NF=21265, NS =1, NL=38, NL1=16)
+
+      dimension wavl(NL),wavu(NL),fluxw(NL)
+      dimension flx(NF),xlam(NF), flx1(NF),xlam1(NF)
+      dimension wavl1(NL1), wavu1(NL1),flux1(NL1)
+
+      DATA WAVL1/ 2000.,2020.,2041.,2062.,2083.,2105.,2128.,2151.,
+     & 2174.,2200.,2222.,2247.,2273.,2299.,2326.,2353./
+      DATA WAVU1/ 2020.,2041.,2062.,2083.,2105.,2128.,2151.,2174.,
+     & 2200.,2222.,2247.,2273.,2299.,2326.,2353.,2381./
+      DATA WAVL/ 2376., 2750.,2850.,3071.,3292.,3412.,3900.,
+     & 4500.,5400.,5495.,5666.,6050.,6250.,6667.,6910.,7520.,7840.,
+     & 8420.,8910.,9620.,10360.,10700.,11300.,12030.,13070.,14310.,
+     & 15650.,16880.,18620.,20200.,22030.,24810.,26600.,29200.,
+     & 32390.,35770., 40100.,41720./
+      DATA WAVU/ 2750.,2850.,3071.,3292.,3412.,3900.,4500.,
+     & 5400.,5495.,5666.,6050.,6250.,6667.,6910.,7520.,7840.,8420.,
+     & 8910.,9620.,10360.,10700.,11300.,12030.,13070.,14310.,15650.,
+     & 16880.,18620.,20200.,22030.,24810.,26600.,29200.,32390.,
+     & 35770.,40100.,41720.,45450./
+  
+C  Open the necessary datafiles
+      open(unit=1, file='Teff3200_model.dat' , status='old')
+      open(unit=2, file='model3200-0.20AU_scaled.pdat')
+      open(unit=3, file='model3200_surf-0.20AU.pdat',status='unknown')
+c Writing the headers on the output files
+c NOTE: Change the headers according to the star
+      write(2,202)
+ 202  format(1x,'T3200 FLUX',' scaled at the distance the planet')
+      write(3,401)
+ 401  format(3x,'L',6x,'T3200')
+c Afac as defined by Kasting et al 1993 (Icarus 101,108)
+c NOTE: It should be changed according to the surface temperature of the star
+c Data for sigma Bootis (F2V star) Afac =1.11
+c Data for epsilon Eridani (K2V star) Afac =0.95
+c Data for epsilon Eridani (M star) Afac=0.90
+       Afac = 0.9
+c equivalent 1 AU distance for GJ 581 0.1225 AU
+       dplanet = 0.25*0.8   !AU
+       dfac = (0.1225/dplanet)**2
+c Stellar luminosity in solar units
+c Data for sigma Bootis (F2V star) L=3.18 L_sol
+c  Data for epsilon Eridani (K2V star) L=0.27 L_sol
+c Data for AD Leo (M star) L=2.3e-2 L_sol
+        xLumstar= 0.0135
+C   Fluxes must be in ergs/cm^2/s/A
+      do i=1,NS
+       read(1,*)
+      end do
+      do i=1,NF
+       read(1,*) xlam(i),flx(i)
+        xlam(i)= xlam(i)*1.e4      !converting from um to A
+c          xlam(i)=xlam(i)*10.       !converting nm to A
+        flx(i)= flx(i)*1.e3        !W/cm^2/um to erg/cm^2/s/A
+c         flx(i)= flx(i)*1.e2        !W/m^2/nm to erg/cm^2/s/A   
+      end do
+
+c Calculating the integrated flux (erg/cm^2/s)
+      sum_flux = 0.0
+      do i=1,NF-1
+         sum_flux = sum_flux + (flx(i)*(xlam(i+1)-xlam(i)))
+      end do
+
+C scaling to solar constant
+        facm = (1.36e6)/sum_flux
+        tfac=facm*Afac*dfac
+        write(2,204)facm,Afac,dfac,tfac
+ 204  FORMAT(1x,'Scale factor = ',1e10.3,' * ',e7.2e1,'*',1e10.3,
+     &'=',1pe10.3/)
+       dp=SQRT(xLumstar/Afac)
+       write(2,206)dplanet
+ 206   format(1x,'Distance star-planet= ',1pe10.3,' AU')
+       write(2,205)
+ 205  format(5x,'A',7x,'erg/s/cm^2/A')
+        do i=1,NF
+          flx(i) = flx(i)*tfac
+          write(2,201) xlam(i),flx(i)
+        end do
+ 201  FORMAT(f9.0,2x,e12.6,2x,e12.6)
+
+C   Now bin the star data flux into a form usable by the climate model
+      is1 = 1
+      do 6 l=1,NL
+      dwav = wavu(l) - wavl(l)
+      do 7 i=is1,NF
+      if (xlam(i) .lt. wavl(l)) go to 7
+      is1 = i
+      go to 8
+ 7    continue
+c
+ 8    do 9 i=is1,NF
+      if (xlam(i) .lt. wavu(l)) go to 9
+      is2 = i - 1
+      go to 10
+ 9    continue
+c
+C   alam(is1) and alam(is2) are both within interval l
+ 10   continue
+      datnum = is2 - is1 + 1
+      fluxw(l)=0.
+      do 12 i=is1,is2
+ 12      fluxw(l) = fluxw(l) + flx(i)
+      fluxw(l) = fluxw(l)/datnum * dwav
+ 6    continue
+C
+      is1 = 1
+      do 13 l=1,NL1
+      dwav = wavu1(l) - wavl1(l)
+      do 14 i=is1,NF
+      if (xlam(i) .lt. wavl1(l)) go to 14
+      is1 = i
+      go to 15
+ 14   continue
+c
+ 15    do 16 i=is1,NF
+      if (xlam(i) .lt. wavu1(l)) go to 16
+      is2 = i - 1
+      go to 17
+ 16    continue
+c
+C   alam(is1) and alam(is2) are both within interval l
+ 17   continue
+      datnum = is2 - is1 + 1
+      flux1(l)=0.
+      do 18 i=is1,is2
+ 18   flux1(l) = flux1(l) + flx(i)
+      flux1(l) = flux1(l)/datnum * dwav
+ 13    continue
+
+      do i=1,NL1
+        write(3,400) i,flux1(i),wavl1(i),wavu1(i)
+      enddo
+      write(3,*)
+      do i=1,NL
+        write(3,400) i,fluxw(i),wavl(i),wavu(i)
+      end do
+ 400  format(1x,i3,2x,1E11.4,2(2x,f7.0))
+      close(2)
+c Checking the normalization
+      open(unit=5, file='model3200_scaled.pdat')
+      do ii=1,5
+       read(5,*)
+      enddo
+      do i=1,NF
+       read(5,*) xlam1(i),flx1(i)
+      enddo
+c Calculating the integrated flux (erg/cm^2/s) at 1 AU
+      sum_flux1 = 0.0
+      do i=1,NF-1
+         delta1= xlam1(i+1)-xlam1(i)
+         sum_flux1 = sum_flux1 + delta1*(flx1(i)+flx1(i+1))/2.
+      end do
+      facm1 = sum_flux1/(1.36e6)
+c facm1 must be equal to Afac
+      print*, Afac,facm1
+ 
+        print*,"Done."
+      stop
+      end
