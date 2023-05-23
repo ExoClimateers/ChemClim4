@@ -1,0 +1,8 @@
+ NCOUPLE                     20  NITER                     20
+ 7 convergence criteria of  8 have been reached.  1 more need to be reached
+ conv dtn(ND) < 1. passed
+ dtn(JCOLD < 2 passed
+ dtn(JCONV < 2 passed
+ divF < 1e-3 passed
+ eq. for O3 col depth reached
+ perlb0 > 0.9 cond. reached

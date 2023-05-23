@@ -1,0 +1,15 @@
+IMW=       1
+RSURF=     0.77
+ZY=        60
+DTAU0=     0.5
+ZCON=      20
+P0=        0.0001
+FAC=       1.
+IO3=       1
+IUP=       0
+TG0=       288.0
+TSTRAT=    200.0
+ICONSERV=  0
+SRFALB=    0.2
+CO2MAX=    3.55e-2
+Idry=      0

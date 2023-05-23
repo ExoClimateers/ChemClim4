@@ -1,0 +1,7 @@
+550.4    = G, Gravity - Earth=980.7, Mars=373.0, Gl581g
+1.61     = R0 (planet radius on Earth radius units)
+8.56      = surface pressure
+0.2     = ALB, Surface Albedo - Earth=0.25, Mars=0.215
+90000.0    = DELZ, Height of each atm layer - Earth=1.0E5, Mars=2.0E5 (cm)
+1100000.0    = ZTROP, Height of the tropopause - typically Earth=11km, Mars=15km
+12.2222222222       = JTROP, Grid layer marking the tropopause height, depends on ZTROP and DELZ

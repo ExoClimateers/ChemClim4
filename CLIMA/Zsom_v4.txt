@@ -1,0 +1,20 @@
+125:c A. Zsom: initial water and ozone mixing ratios
+190:c A. Zsom
+207:c A. Zsom: the input_comp file contains the water and O3 initial mixing ratios needed for the climate code.
+277:C A. Zsom: the first 4 lines are deleted from the input_clima.dat
+311:c A. Zsom: i got rid of the format 502.
+323:c A. Zsom: a check of N2
+363:c. A. Zsom bug fix solint should be here not flux
+382:c A. Zsom: initiating the temperature and water profile when the code is called first
+384:c Zsom: reading the input_comp.dat file
+388:c A. Zsom	  
+429:c A. Zsom: if ncouple eq 1, we initialize the water profile using cgprofile. 
+432:c A. Zsom: reading the input_comp.dat file
+436:c A. Zsom	
+464:c A. Zsom
+597:c A. Zsom: Sid's heat capacities
+839:c A. Zsom: Water recalculation after the temperature is smoothed. this was missing before
+896:c A. Zsom
+925:c A. Zsom (03.28.2011): changed the format of the clima_allout.tab to
+927:c 20.04.2011 A. Zsom: changed the format a bit again.
+1080:c Zsom

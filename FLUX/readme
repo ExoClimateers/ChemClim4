@@ -1,0 +1,3 @@
+ This subdirectory contains the subroutines that read the flux from stars.
+In the case of the climate model is only for stars that are not the Sun.
+In the case of the photochemical model is for the far uv of the Sun and other stars.
