@@ -1,6 +1,13 @@
-# for the convergence test.
-# to test how many layers are needed.
+'''
+Title: run_me.py
+Author: SRugheimer, JParsons
+Date_modified: 2023_05_23
+Date_created: 2023_05_23
+Description:
 
+Notes:
+
+'''
 import os
 import sys
 import math
