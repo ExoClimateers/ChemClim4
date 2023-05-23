@@ -65,7 +65,7 @@ for i in range(len(ND)):
 #ctop=[0,4.,5.,6.,7.,8.,9.]                # km - cloud top
 #rdrop=[0,10.,10.,10.,10.,10.,10.]         # micron - droplet size
 #npart=[0,100.,100.,100.,100.,100.,100.]   # droplets/cm^3 - number density of droplets
- 
+
 cdeck=0.
 ctop=0.
 rdrop=0. 
