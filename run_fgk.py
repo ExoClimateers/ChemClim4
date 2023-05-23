@@ -266,7 +266,7 @@ for j in range(len(star)):
         cloud=open(IO_path+"cloud.dat","w")
 
 # generating the height array, height is in km
-        Z=arange(0,100,0.1)
+        Z=arange(0,100,0.1) 
 
 # generating the RPART and NPART arrays
         RPART=[]
