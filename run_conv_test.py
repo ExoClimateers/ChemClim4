@@ -19,7 +19,7 @@ ND_path="/home/rugheimer/CHEMCLIM1/CHEMCLIM/CLIMA/INCLUDECLIM/"
 
 # star parameters:
 star=['K7V'] # spectral type of the star. it can be Sun, F2V, K2V, dMV 
-           #    and Sarah's stars: F2a, K2a, G2a, F0V, F5V, F9V, G2V, G8V, K2V, K5V
+            #    and Sarah's stars: F2a, K2a, G2a, F0V, F5V, F9V, G2V, G8V, K2V, K5V
 #star=['F0V','F2V','F5V','F7V','F9V','G2V','Sun']#,'G8V','K0V','K2V','K4V','K5V','K7V']
 #star=['K4V','K5V','K7V']
 fluxfac=1. # distance scaling. 
@@ -105,10 +105,10 @@ for j in range(len(star)):
     name=star[j]
     for k in range(len(ND)):
         if ND[k]>600:
-            print 'You choose an ND value greater than 600.'
-            print 'Before you compile and run the code, see the header of rrtm.f'
-            print 'and tridag.f and apply the necessary changes.'
-            print 'Then rerun the python script.'
+            print('You choose an ND value greater than 600.')
+            print('Before you compile and run the code, see the header of rrtm.f')
+            print('and tridag.f and apply the necessary changes.')
+            print('Then rerun the python script.')
             sys.exit()
 
     for k in range(len(ND)):
@@ -126,7 +126,7 @@ for j in range(len(star)):
         if name == " ":
             couple.write("clima_allout_"+str(ND[k])+".tab\n")
             couple.write("clima_calls_"+str(ND[k])+".tab")
-  
+
         else:
             couple.write("clima_allout_"+name+"_"+str(ND[k])+".tab\n")
             couple.write("clima_calls_"+name+"_"+str(ND[k])+".tab")
@@ -316,4 +316,4 @@ for j in range(len(star)):
             os.system("cp IO/altPT-lisa.dat IO/altPT_"+name+"_"+str(ND[k])+".txt")
             os.system("cp IO/chem-lisa.dat IO/chem_"+name+"_"+str(ND[k]))
             os.system("cp IO/convergence.txt IO/convergence_"+name+"_"+str(ND[k])+".txt")
-       
+

@@ -30,7 +30,7 @@ name="cloud"
 
 # star parameters:
 star='Sun' # spectral type of the star. it can be Sun, F2V, K2V, dMV 
-           #    and Sarah's stars: F2a, K2a, G2a, F0V, F5V, F9V, G2V, G8V, K2V, K8V
+            #    and Sarah's stars: F2a, K2a, G2a, F0V, F5V, F9V, G2V, G8V, K2V, K8V
 fluxfac=1. # distance scaling. 
 
 # couple.f parameters:
@@ -56,7 +56,7 @@ cdeck=[0,1.,2.,3.,4.,5.,6.]               # km - cloud deck
 ctop=[0,4.,5.,6.,7.,8.,9.]                # km - cloud top
 rdrop=[0,10.,10.,10.,10.,10.,10.]         # micron - droplet size
 npart=[0,100.,100.,100.,100.,100.,100.]   # droplets/cm^3 - number density of droplets
- 
+
 #cdeck=[2.]
 #ctop=[5.]
 #rdrop=[10.] 
@@ -102,10 +102,10 @@ Fother=1e-20            # mixing ratio of all other chemicals
 
 
 if ND>300:
-    print 'You choose an ND value greater than 300.'
-    print 'Before you compile and run the code, see the header of rrtm.f'
-    print 'and tridag.f and apply the necessary changes.'
-    print 'Then rerun the python script.'
+    print('You choose an ND value greater than 300.')
+    print('Before you compile and run the code, see the header of rrtm.f')
+    print('and tridag.f and apply the necessary changes.')
+    print('Then rerun the python script.')
     sys.exit()
 
 for k in range(len(cdeck)):

@@ -21,7 +21,7 @@ ND_path=os.getcwd()+'/CLIMA/INCLUDECLIM/'
 # star parameters:
 star=['Sun']
 #star=['F7V','K2V'] # spectral type of the star. it can be Sun, F2V, K2V, dMV 
-           #    and Sarah's stars: F2a, K2a, G2a, F0V, F5V, F9V, G2V, G8V, K2V, K5V
+            #    and Sarah's stars: F2a, K2a, G2a, F0V, F5V, F9V, G2V, G8V, K2V, K5V
 
 #fluxfac=[0.756,0.797,0.826,0.873,0.907,0.961,1.,1.063,1.108,1.156,1.235,1.291,1.384] # distance scaling. 
 #1/dist^2 = fluxfac  [1.15,1.12,1.10,1.07,1.05,1.02,1.00,0.97,0.95,0.93,0.9,0.88,0.85]
@@ -113,10 +113,10 @@ for l in range(len(fluxfac)):
         name=star[j]+"test4"
         for k in range(len(ND)):
             if ND[k]>600:
-                print 'You choose an ND value greater than 600.'
-                print 'Before you compile and run the code, see the header of rrtm.f'
-                print 'and tridag.f and apply the necessary changes.'
-                print 'Then rerun the python script.'
+                print('You choose an ND value greater than 600.')
+                print('Before you compile and run the code, see the header of rrtm.f')
+                print('and tridag.f and apply the necessary changes.')
+                print('Then rerun the python script.')
                 sys.exit()
                 
         for k in range(len(ND)):
@@ -134,7 +134,7 @@ for l in range(len(fluxfac)):
             if name == " ":
                 couple.write("clima_allout_"+str(ND[k])+"_ff"+str(fluxfac[l])+".tab\n")
                 couple.write("clima_calls_"+str(ND[k])+"_ff"+str(fluxfac[l])+".tab")
-  
+
             else:
                 couple.write("clima_allout_"+name+"_"+str(ND[k])+"_ff"+str(fluxfac[l])+".tab\n")
                 couple.write("clima_calls_"+name+"_"+str(ND[k])+"_ff"+str(fluxfac[l])+".tab")
@@ -324,4 +324,4 @@ for l in range(len(fluxfac)):
                 os.system("cp IO/altPT-lisa.dat IO/altPT_"+name+"_"+str(ND[k])+"_ff"+str(fluxfac[l])+".txt")
                 os.system("cp IO/chem-lisa.dat IO/chem_"+name+"_"+str(ND[k])+"_ff"+str(fluxfac[l]))
                 os.system("cp IO/convergence.txt IO/convergence_"+name+"_"+str(ND[k])+"_ff"+str(fluxfac[l])+".txt")
-       
+
