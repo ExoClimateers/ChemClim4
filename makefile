@@ -3,75 +3,75 @@
 ###############################
 # Set variables
 ###############################
-FC = ifort
+FC      = ifort
 #PLATFORM = linux
-FCFLAG = -c -r8 -i8 #-debug #-g -pg -CB
-FFLAG1 = -r8 -i8 #-debug #-g -pg -CB
+FCFLAG  = -c -r8 -i8 #-debug #-g -pg -CB
+FFLAG1  = -r8 -i8 #-debug #-g -pg -CB
 
-OUTPUT = couple
-CDIRPH = ATMCHEM/
-CDIRCL = CLIMA/
-CDOTO  = ATMCHEM.o
-CDOTOC = CLIMA.o
-CDOTOR = RRTM.o
+OUTPUT  = couple
+CDIRPH  = ATMCHEM/
+CDIRCL  = CLIMA/
+CDOTO   = ATMCHEM.o
+CDOTOC  = CLIMA.o
+CDOTOR  = RRTM.o
 CDOTCOU = COUPLE.o
 # Main files
 COUPLED = couple
-CSUR = clima
-CCHEM = atm_chem
+CSUR    = clima
+CCHEM   = atm_chem
 
 # Subroutines for coupling
 CPATH0 = COUPLE
-COUTP = output_photo
-CINPI = input_interp
+COUTP  = output_photo
+CINPI  = input_interp
 
 # Subdirectories and subroutines for the CLIMATE model
 CPATHR = RRTM
-CRTM = rrtm
-CREG = rtreg
-CRTR = rtr
-CATM = rrtatm
-CSET = setcoef
-CTAU = taumol
-CRGC = rtregcld
-CRTC = rtrcld
-CEXT = extra
-CRTX = rtrcldmr
-CRGX = rtregcldmr
-CKGS = k_g
-CCLD = cldprop
+CRTM   = rrtm
+CREG   = rtreg
+CRTR   = rtr
+CATM   = rrtatm
+CSET   = setcoef
+CTAU   = taumol
+CRGC   = rtregcld
+CRTC   = rtrcld
+CEXT   = extra
+CRTX   = rtrcldmr
+CRGX   = rtregcldmr
+CKGS   = k_g
+CCLD   = cldprop
 #CUTL = util_$(PLATFORM)
-CTRNT = translatem
+CTRNT  = translatem
 
 # These are the climate code files
 CPATH1 = SETUP
-CPROF = cprofile
-CREAD = readsol
-CGRID = cgrid
-CIRES = irexpsums
-CINTP = interp
-CINOZ = interpozone
-COZON = ozone
+CPROF  = cprofile
+CREAD  = readsol
+CGRID  = cgrid
+CIRES  = irexpsums
+CINTP  = interp
+CINOZ  = interpozone
+COZON  = ozone
 
 CPATH2 = CONVEC
-CCONV = convec
-CSATH = satrat
-CRELH = relhum
-CSATC = satco2
+CCONV  = convec
+CSATH  = satrat
+CRELH  = relhum
+CSATC  = satco2
 
 CPATH3 = RADTRANS
-CSOL  = solar
-CINFR = ir
-CRAYL = rayley
-CDSTI = delta2strir
-CDSTS = delta2str
-CMTRX = tridag
-CPLAN = planck
+CSOL   = solar
+CINFR  = ir
+CRAYL  = rayley
+CDSTI  = delta2strir
+CDSTS  = delta2str
+CMTRX  = tridag
+CPLAN  = planck
 
 CPATH4 = PRTCL
-CGRDA = gridaer
-CADAT = aerabsdata
-CINPA = interpar1
+CGRDA  = gridaer
+CADAT  = aerabsdata
+CINPA  = interpar1
 
 # Subdirectories  and subroutines from the PHOTOCHEMICAL model
 PPATH1 = SETUP
@@ -81,7 +81,7 @@ PCRPHT = readphoto
 PCDENS = densty
 PCDFCO = difco
 PCSATR = psatrat
-CGASC = gascon
+CGASC  = gascon
 
 PPATH2 = CHEM
 PCTBDY = tbdy
@@ -105,74 +105,74 @@ PSAXPY = saxpy
 PSSCAL = sscal
 
 # Subdirectories  and subroutines from the time dependent coupling
-PATH1 = FLUX
-CSTAR = choose_star
+PATH1  = FLUX
+CSTAR  = choose_star
 PCRSTR = readstar
 
-OBPATH = $(CDOTCOU)/$(COUPLED).o \
-         $(CDOTCOU)/$(COUTP).o \
-         $(CDOTCOU)/$(CINPI).o \
-         $(CDIRPH)$(CDOTO)/$(CCHEM).o \
-	 $(CDIRPH)$(CDOTO)/$(PCGRID).o \
-	 $(CDIRPH)$(CDOTO)/$(PCRATE).o \
-	 $(CDIRPH)$(CDOTO)/$(PCRPHT).o \
-	 $(CDIRPH)$(CDOTO)/$(PCRSTR).o \
-	 $(CDIRPH)$(CDOTO)/$(PCTBDY).o \
-	 $(CDIRPH)$(CDOTO)/$(PCPHOT).o \
-	 $(CDIRPH)$(CDOTO)/$(PCO3PH).o \
-	 $(CDIRPH)$(CDOTO)/$(PCDENS).o \
-	 $(CDIRPH)$(CDOTO)/$(PCDFCO).o \
-	 $(CDIRPH)$(CDOTO)/$(PCSDMT).o \
-	 $(CDIRPH)$(CDOTO)/$(PCSATR).o \
-	 $(CDIRPH)$(CDOTO)/$(PCAERT).o \
-	 $(CDIRPH)$(CDOTO)/$(PCAERC).o \
-	 $(CDIRPH)$(CDOTO)/$(PCDOCH).o \
-	 $(CDIRPH)$(CDOTO)/$(PCCHPL).o \
-	 $(CDIRPH)$(CDOTO)/$(PCLTNG).o \
-	 $(CDIRPH)$(CDOTO)/$(PCTSTR).o \
+OBPATH = $(CDOTCOU)/$(COUPLED).o       \
+         $(CDOTCOU)/$(COUTP).o         \
+         $(CDOTCOU)/$(CINPI).o         \
+         $(CDIRPH)$(CDOTO)/$(CCHEM).o  \
+	 	 $(CDIRPH)$(CDOTO)/$(PCGRID).o \
+	 	 $(CDIRPH)$(CDOTO)/$(PCRATE).o \
+		 $(CDIRPH)$(CDOTO)/$(PCRPHT).o \
+		 $(CDIRPH)$(CDOTO)/$(PCRSTR).o \
+		 $(CDIRPH)$(CDOTO)/$(PCTBDY).o \
+		 $(CDIRPH)$(CDOTO)/$(PCPHOT).o \
+		 $(CDIRPH)$(CDOTO)/$(PCO3PH).o \
+		 $(CDIRPH)$(CDOTO)/$(PCDENS).o \
+		 $(CDIRPH)$(CDOTO)/$(PCDFCO).o \
+		 $(CDIRPH)$(CDOTO)/$(PCSDMT).o \
+		 $(CDIRPH)$(CDOTO)/$(PCSATR).o \
+		 $(CDIRPH)$(CDOTO)/$(PCAERT).o \
+		 $(CDIRPH)$(CDOTO)/$(PCAERC).o \
+		 $(CDIRPH)$(CDOTO)/$(PCDOCH).o \
+		 $(CDIRPH)$(CDOTO)/$(PCCHPL).o \
+		 $(CDIRPH)$(CDOTO)/$(PCLTNG).o \
+		 $(CDIRPH)$(CDOTO)/$(PCTSTR).o \
          $(CDIRPH)$(CDOTO)/$(PSGTSL).o \
          $(CDIRPH)$(CDOTO)/$(PSGBSL).o \
          $(CDIRPH)$(CDOTO)/$(PSGBFA).o \
          $(CDIRPH)$(CDOTO)/$(PSAXPY).o \
          $(CDIRPH)$(CDOTO)/$(PSSCAL).o \
-         $(CDIRCL)$(CDOTOC)/$(CSUR).o \
-	 $(CDIRCL)$(CDOTOR)/$(CRTM).o \
-	 $(CDIRCL)$(CDOTOR)/$(CREG).o \
-	 $(CDIRCL)$(CDOTOR)/$(CRTR).o \
-	 $(CDIRCL)$(CDOTOR)/$(CATM).o \
-	 $(CDIRCL)$(CDOTOR)/$(CSET).o \
-	 $(CDIRCL)$(CDOTOR)/$(CTAU).o \
-	 $(CDIRCL)$(CDOTOR)/$(CRGC).o \
-	 $(CDIRCL)$(CDOTOR)/$(CRTC).o \
-	 $(CDIRCL)$(CDOTOR)/$(CEXT).o \
-	 $(CDIRCL)$(CDOTOR)/$(CRTX).o \
-	 $(CDIRCL)$(CDOTOR)/$(CRGX).o \
-	 $(CDIRCL)$(CDOTOR)/$(CCLD).o \
-	 $(CDIRCL)$(CDOTOR)/$(CKGS).o \
+         $(CDIRCL)$(CDOTOC)/$(CSUR).o  \
+		 $(CDIRCL)$(CDOTOR)/$(CRTM).o  \
+		 $(CDIRCL)$(CDOTOR)/$(CREG).o  \
+		 $(CDIRCL)$(CDOTOR)/$(CRTR).o  \
+		 $(CDIRCL)$(CDOTOR)/$(CATM).o  \
+		 $(CDIRCL)$(CDOTOR)/$(CSET).o  \
+		 $(CDIRCL)$(CDOTOR)/$(CTAU).o  \
+		 $(CDIRCL)$(CDOTOR)/$(CRGC).o  \
+		 $(CDIRCL)$(CDOTOR)/$(CRTC).o  \
+		 $(CDIRCL)$(CDOTOR)/$(CEXT).o  \
+		 $(CDIRCL)$(CDOTOR)/$(CRTX).o  \
+		 $(CDIRCL)$(CDOTOR)/$(CRGX).o  \
+		 $(CDIRCL)$(CDOTOR)/$(CCLD).o  \
+		 $(CDIRCL)$(CDOTOR)/$(CKGS).o  \
          $(CDIRCL)$(CDOTOR)/$(CTRNT).o \
-	 $(CDIRCL)$(CDOTOC)/$(CPROF).o \
-	 $(CDIRCL)$(CDOTOC)/$(CREAD).o \
-	 $(CDIRCL)$(CDOTOC)/$(CSTAR).o \
-	 $(CDIRCL)$(CDOTOC)/$(CGRID).o \
-	 $(CDIRCL)$(CDOTOC)/$(CIRES).o \
-	 $(CDIRCL)$(CDOTOC)/$(CINTP).o \
-	 $(CDIRCL)$(CDOTOC)/$(CINOZ).o \
-	 $(CDIRCL)$(CDOTOC)/$(COZON).o \
-	 $(CDIRCL)$(CDOTOC)/$(CCONV).o \
-	 $(CDIRCL)$(CDOTOC)/$(CSATH).o \
-	 $(CDIRCL)$(CDOTOC)/$(CRELH).o \
- 	 $(CDIRCL)$(CDOTOC)/$(CSATC).o \
-	 $(CDIRCL)$(CDOTOC)/$(CGASC).o \
-	 $(CDIRCL)$(CDOTOC)/$(CSOL).o  \
-	 $(CDIRCL)$(CDOTOC)/$(CINFR).o \
-	 $(CDIRCL)$(CDOTOC)/$(CRAYL).o \
-	 $(CDIRCL)$(CDOTOC)/$(CDSTI).o \
-	 $(CDIRCL)$(CDOTOC)/$(CDSTS).o \
-	 $(CDIRCL)$(CDOTOC)/$(CMTRX).o \
-	 $(CDIRCL)$(CDOTOC)/$(CPLAN).o \
-	 $(CDIRCL)$(CDOTOC)/$(CGRDA).o \
-	 $(CDIRCL)$(CDOTOC)/$(CADAT).o \
-	 $(CDIRCL)$(CDOTOC)/$(CINPA).o 
+		 $(CDIRCL)$(CDOTOC)/$(CPROF).o \
+		 $(CDIRCL)$(CDOTOC)/$(CREAD).o \
+		 $(CDIRCL)$(CDOTOC)/$(CSTAR).o \
+		 $(CDIRCL)$(CDOTOC)/$(CGRID).o \
+		 $(CDIRCL)$(CDOTOC)/$(CIRES).o \
+		 $(CDIRCL)$(CDOTOC)/$(CINTP).o \
+		 $(CDIRCL)$(CDOTOC)/$(CINOZ).o \
+		 $(CDIRCL)$(CDOTOC)/$(COZON).o \
+		 $(CDIRCL)$(CDOTOC)/$(CCONV).o \
+		 $(CDIRCL)$(CDOTOC)/$(CSATH).o \
+		 $(CDIRCL)$(CDOTOC)/$(CRELH).o \
+ 		 $(CDIRCL)$(CDOTOC)/$(CSATC).o \
+		 $(CDIRCL)$(CDOTOC)/$(CGASC).o \
+		 $(CDIRCL)$(CDOTOC)/$(CSOL).o  \
+		 $(CDIRCL)$(CDOTOC)/$(CINFR).o \
+		 $(CDIRCL)$(CDOTOC)/$(CRAYL).o \
+		 $(CDIRCL)$(CDOTOC)/$(CDSTI).o \
+		 $(CDIRCL)$(CDOTOC)/$(CDSTS).o \
+		 $(CDIRCL)$(CDOTOC)/$(CMTRX).o \
+		 $(CDIRCL)$(CDOTOC)/$(CPLAN).o \
+		 $(CDIRCL)$(CDOTOC)/$(CGRDA).o \
+		 $(CDIRCL)$(CDOTOC)/$(CADAT).o \
+		 $(CDIRCL)$(CDOTOC)/$(CINPA).o 
 ###############################
 # Load line
 ###############################

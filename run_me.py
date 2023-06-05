@@ -1,8 +1,8 @@
 '''
 Title: run_me.py
 Author: SRugheimer, JParsons
-Date_modified: 2023_05_23
-Date_created: 2023_05_23
+Date_modified: 2023_06_05
+Date_created:  2023_05_23
 Description:
 
 Notes:
@@ -151,11 +151,11 @@ for l in range(len(fluxfac)):                                          # loop ov
             else:
                 namek = name+"_"+str(ND[k])
             couple.write("clima_allout_"+namek+"_ff"+str(fluxfac[l])+".tab\n")
-            couple.write("clima_calls_"+namek+"_ff"+str(fluxfac[l])+".tab")
+            couple.write("clima_calls_" +namek+"_ff"+str(fluxfac[l])+".tab")
             couple.close()                                             # close input dat file
 
             # Setup input_clima.dat
-            clima=open(IO_path+"input_clima.dat","w")
+            clima=open(IO_path+     "input_clima.dat","w")
             clima.write("IMW=       1\n")
             clima.write("RSURF=     "+str(RELHUM_surf)+"\n")
             clima.write("ZY=        "+str(ZY)+"\n")
@@ -173,13 +173,13 @@ for l in range(len(fluxfac)):                                          # loop ov
             clima.write("Idry=      0\n")
             clima.close()
             # Setup planet.dat
-            planet=open(IO_path+"planet.dat","w")
-            planet.write(str(G)+"    = G, Gravity - Earth=980.7, Mars=373.0, Gl581g\n")
-            planet.write(str(R0)+"     = R0 (planet radius on Earth radius units)\n")
-            planet.write(str(P0)+"      = surface pressure\n")
-            planet.write(str(ALB)+"     = ALB, Surface Albedo - Earth=0.25, Mars=0.215\n")
-            planet.write(str(delz[k])+"    = DELZ, Height of each atm layer - Earth=1.0E5, Mars=2.0E5 (cm)\n")
-            planet.write(str(ZTROP)+"    = ZTROP, Height of the tropopause - typically Earth=11km, Mars=15km\n")
+            planet=open(IO_path+       "planet.dat","w")
+            planet.write(str(G)+       "    = G, Gravity - Earth=980.7, Mars=373.0, Gl581g\n")
+            planet.write(str(R0)+      "     = R0 (planet radius on Earth radius units)\n")
+            planet.write(str(P0)+      "      = surface pressure\n")
+            planet.write(str(ALB)+     "     = ALB, Surface Albedo - Earth=0.25, Mars=0.215\n")
+            planet.write(str(delz[k])+ "    = DELZ, Height of each atm layer - Earth=1.0E5, Mars=2.0E5 (cm)\n")
+            planet.write(str(ZTROP)+   "    = ZTROP, Height of the tropopause - typically Earth=11km, Mars=15km\n")
             planet.write(str(JTROP[k])+"       = JTROP, Grid layer marking the tropopause height, depends on ZTROP and DELZ\n")
             planet.close()
             # input_atmchem.dat
@@ -196,25 +196,25 @@ for l in range(len(fluxfac)):                                          # loop ov
             atmo.write("FO2=       0.21\n")
             atmo.close()
             # mixing_ratios.dat
-            mixing=open(IO_path+"mixing_ratios.dat","w")
-            mixing.write(str(FAR)+"\n")
-            mixing.write(str(FCH4)+"\n")
-            mixing.write(str(FCO2)+"\n")
-            mixing.write(str(FO2)+"\n")
+            mixing=open(IO_path+       "mixing_ratios.dat","w")
+            mixing.write(str(FAR)+     "\n")
+            mixing.write(str(FCH4)+    "\n")
+            mixing.write(str(FCO2)+    "\n")
+            mixing.write(str(FO2)+     "\n")
             mixing.write(str(JTROP[k])+"\n")
-            mixing.write(str(O3save)+"\n")
+            mixing.write(str(O3save)+  "\n")
             mixing.close()
             # input_comp.dat    
-            comp=open(IO_path+"input_comp.dat","w")
-            comp.write(str(FH2O)+"\n")
-            comp.write(str(FO3)+"\n")
-            comp.write(str(FH2)+"\n")
-            comp.write(str(FCO)+"\n")
-            comp.write(str(FN2O)+"\n")
+            comp=open(IO_path+     "input_comp.dat","w")
+            comp.write(str(FH2O)+  "\n")
+            comp.write(str(FO3)+   "\n")
+            comp.write(str(FH2)+   "\n")
+            comp.write(str(FCO)+   "\n")
+            comp.write(str(FN2O)+  "\n")
             comp.write(str(FCH3CL)+"\n")
-            comp.write(str(RPAR)+"\n")
+            comp.write(str(RPAR)+  "\n")
             comp.write(str(AERSOL)+"\n")
-            comp.write(str(WFALL)+"\n")
+            comp.write(str(WFALL)+ "\n")
             comp.write(str(SO4AER)+"\n")
             comp.write(str(Fother)+"\n")
             comp.close()
@@ -285,9 +285,9 @@ for l in range(len(fluxfac)):                                          # loop ov
             # running the code
             os.system("./couple")
             # renaming output files
-            os.system("cp IO/outchem.dat IO/outchem_"+namek+"_ff"+str(fluxfac[l])+".dat\n")
+            os.system("cp IO/outchem.dat IO/outchem_"            +namek+"_ff"+str(fluxfac[l])+".dat\n")
             os.system("cp IO/output_couple.dat IO/output_couple_"+namek+"_ff"+str(fluxfac[l])+".dat")
-            os.system("cp IO/altPT-lisa.dat IO/altPT_"+namek+"_ff"+str(fluxfac[l])+".txt")
-            os.system("cp IO/chem-lisa.dat IO/chem_"+namek+"_ff"+str(fluxfac[l]))
-            os.system("cp IO/convergence.txt IO/convergence_"+namek+"_ff"+str(fluxfac[l])+".txt")
+            os.system("cp IO/altPT-lisa.dat IO/altPT_"           +namek+"_ff"+str(fluxfac[l])+".txt")
+            os.system("cp IO/chem-lisa.dat IO/chem_"             +namek+"_ff"+str(fluxfac[l]))
+            os.system("cp IO/convergence.txt IO/convergence_"    +namek+"_ff"+str(fluxfac[l])+".txt")
 
