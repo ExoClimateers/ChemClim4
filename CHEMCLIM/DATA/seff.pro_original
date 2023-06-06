@@ -1,0 +1,751 @@
+pro seffphoto, ff
+
+print, "Seff Photo"
+print, "Fudge Factor ", ff
+
+seff=fltarr(13)
+;didn't calculate
+seff(0)= 1.09^ff;best guess  ;;A2
+seff(1)= 1.07^ff;best guess  ;;A5
+seff(2)= 1.0527^ff  ;;A7
+
+;calculated
+;; seff(3)= 1.03494^ff ;;F0
+;; seff(4)= 1.02844^ff ;;F2
+;; seff(5)= 1.01607^ff  ;;F5
+;; seff(6)= 1.0055^ff ;;F9
+;; seff(7)= 1.00177^ff ;;G2
+;; seff(8)= 0.99589^ff ;;G8
+;; seff(9)= 0.98919^ff ;;K2
+;; seff(10)= 0.96900^ff ;;K5
+
+;;; RAN NUMERICALLY TO DETERMINE SEFF TO GET 288 K Surface Temp
+
+seff(3)= 1.08965 ;;F0
+seff(4)= 1.05769 ;;F2
+seff(5)= 1.04899  ;;F5
+seff(6)= 1.01103 ;F9
+seff(7)= 1.00532 ;;G2
+seff(8)= 0.98772 ;;G8
+seff(9)= 0.967919 ;;K2
+seff(10)= 0.909853 ;;K5
+
+
+
+;didn't calculate
+seff(11)= 0.9717^ff ;;M1
+seff(12)=0.970404^ff;;? ;;M2
+
+
+print, "Seff Factors"
+print, "F0", seff(3)
+print, "F2", seff(4)
+print, "F5", seff(5)
+print, "F9", seff(6)
+print, "G2", seff(7)
+print, "G8", seff(8)
+print, "K2", seff(9)
+print, "K5", seff(10)
+print, " "
+
+
+
+;ff=2.5
+;fudgefactor=ff
+
+
+f0=fltarr(4,108)
+header_f0=strarr(1)
+openr, 1, "Teff7000K_photo.pdat_original"
+readf, 1, header_f0
+readf, 1, f0
+close, 1
+
+f2=fltarr(4,108)
+header_f2=strarr(1)
+openr, 1, "Teff6750K_photo.pdat_original"
+readf, 1, header_f2
+readf, 1, f2
+close, 1
+
+f5=fltarr(4,108)
+header_f5=strarr(1)
+openr, 1, "Teff6500K_photo.pdat_original"
+readf, 1, header_f5
+readf, 1, f5
+close, 1
+
+f9=fltarr(4,108)
+header_f9=strarr(1)
+openr, 1, "Teff6000K_photo.pdat_original"
+readf, 1, header_f9
+readf, 1, f9
+close, 1
+
+g2=fltarr(4,108)
+header_g2=strarr(1)
+openr, 1, "G2V_photo.pdat_original"
+readf, 1, header_g2
+readf, 1, g2
+close, 1
+
+g8=fltarr(4,108)
+header_g8=strarr(1)
+openr, 1, "Teff5500K_photo.pdat_original"
+readf, 1, header_g8
+readf, 1, g8
+close, 1
+
+k2=fltarr(4,108)
+header_k2=strarr(1)
+openr, 1, "Teff5000K_photo.pdat_original"
+readf, 1, header_k2
+readf, 1, k2
+close, 1
+
+k5=fltarr(4,108)
+header_k5=strarr(1)
+openr, 1, "Teff4500K_photo.pdat_original"
+readf, 1, header_k5
+readf, 1, k5
+close, 1
+
+;; m2=fltarr(4,108)
+;; header_m2=strarr(1)
+;; openr, 1, "M2V_photo.pdat_original"
+;; readf, 1, header_m2
+;; readf, 1, m2
+;; close, 1
+
+
+
+;; print,f0(1,0)
+;; print,f2(1,0)
+;; print,f5(1,0)
+;; print,f9(1,0)
+;; print,g2(1,0)
+;; print,g8(1,0)
+;; print,k2(1,0)
+;; print,k5(1,0)
+;; print,m2(1,0)
+
+;; print," "
+
+
+;a0(1,*)=a0(1,*)*seff(0)
+;a5(1,*)=a5(1,*)*seff(1)
+;a7(1,*)=a7(1,*)*seff(2)
+f0(1,*)=f0(1,*)*seff(3)
+f2(1,*)=f2(1,*)*seff(4)
+f5(1,*)=f5(1,*)*seff(5)
+f9(1,*)=f9(1,*)*seff(6)
+g2(1,*)=g2(1,*)*seff(7)
+g8(1,*)=g8(1,*)*seff(8)
+k2(1,*)=k2(1,*)*seff(9)
+k5(1,*)=k5(1,*)*seff(10)
+;m1(1,*)=m1(1,*)*seff(11)
+;m2(1,*)=m2(1,*)*seff(12)
+
+;; print,f0(1,0)
+;; print,f2(1,0)
+;; print,f5(1,0)
+;; print,f9(1,0)
+;; print,g2(1,0)
+;; print,g8(1,0)
+;; print,k2(1,0)
+;; print,k5(1,0)
+;; print,m2(1,0)
+
+openw, lun, "Teff7000K_photo.pdat",/get_lun
+printf,lun,header_f0
+for i=0,108-1 do begin
+printf, lun, f0(0,i),f0(1,i),f0(2,i),f0(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+openw, lun, "Teff6750K_photo.pdat",/get_lun
+printf,lun,header_f2
+for i=0,108-1 do begin
+printf, lun, f2(0,i),f2(1,i),f2(2,i),f2(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+openw, lun, "Teff6500K_photo.pdat",/get_lun
+printf,lun,header_f5
+for i=0,108-1 do begin
+printf, lun, f5(0,i),f5(1,i),f5(2,i),f5(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+openw, lun, "Teff6000K_photo.pdat",/get_lun
+printf,lun,header_f9
+for i=0,108-1 do begin
+printf, lun, f9(0,i),f9(1,i),f9(2,i),f9(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+openw, lun, "G2V_photo.pdat",/get_lun
+printf,lun,header_g2
+for i=0,108-1 do begin
+printf, lun, g2(0,i),g2(1,i),g2(2,i),g2(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+openw, lun, "Teff5500K_photo.pdat",/get_lun
+printf,lun,header_g8
+for i=0,108-1 do begin
+printf, lun, g8(0,i),g8(1,i),g8(2,i),g8(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+openw, lun, "Teff5000K_photo.pdat",/get_lun
+printf,lun,header_k2
+for i=0,108-1 do begin
+printf, lun, k2(0,i),k2(1,i),k2(2,i),k2(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+openw, lun, "Teff4500K_photo.pdat",/get_lun
+printf,lun,header_k5
+for i=0,108-1 do begin
+printf, lun, k5(0,i),k5(1,i),k5(2,i),k5(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+;; openw, lun, "M2V_photo.pdat",/get_lun
+;; printf,lun,header_m2
+;; for i=0,108-1 do begin
+;; printf, lun, m2(0,i),m2(1,i),m2(2,i),m2(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+;; endfor
+;; free_lun, lun
+
+end
+
+
+pro seffsurf, ff
+
+print, "Seff Surf"
+print, "Fudge Factor ", ff
+
+seff=fltarr(13)
+;didn't calculate
+seff(0)= 1.09^ff;best guess  ;;A2
+seff(1)= 1.07^ff;best guess  ;;A5
+seff(2)= 1.0527^ff  ;;A7
+
+;calculated
+;; seff(3)= 1.03494^ff ;;F0
+;; seff(4)= 1.02844^ff ;;F2
+;; seff(5)= 1.01607^ff  ;;F5
+;; seff(6)= 1.0055^ff ;;F9
+;; seff(7)= 1.00177^ff ;;G2
+;; seff(8)= 0.99589^ff ;;G8
+;; seff(9)= 0.98919^ff ;;K2
+;; seff(10)= 0.96900^ff ;;K5
+
+;;; RAN NUMERICALLY TO DETERMINE SEFF TO GET 288 K Surface Temp
+
+seff(3)= 1.08965 ;;F0
+seff(4)= 1.05769 ;;F2
+seff(5)= 1.04899  ;;F5
+seff(6)= 1.01103 ;F9
+seff(7)= 1.00532 ;;G2
+seff(8)= 0.98772 ;;G8
+seff(9)= 0.967919 ;;K2
+seff(10)= 0.909853 ;;K5
+
+;didn't calculate
+seff(11)= 0.9717^ff ;;M1
+seff(12)=0.970404^ff;;? ;;M2
+
+
+
+
+N=54
+N1=16
+N2=38
+header="                           "
+
+f0=fltarr(4,N)
+header_f0=strarr(1)
+openr, 1, "Teff7000K_surf.pdat_original"
+readf, 1, header_f0
+readf, 1, f0
+close, 1
+
+;print, f0
+
+
+f2=fltarr(4,N)
+header_f2=strarr(1)
+openr, 1, "Teff6750K_surf.pdat_original"
+readf, 1, header_f2
+readf, 1, f2
+close, 1
+
+f5=fltarr(4,N)
+header_f5=strarr(1)
+openr, 1, "Teff6500K_surf.pdat_original"
+readf, 1, header_f5
+readf, 1, f5
+close, 1
+
+f9=fltarr(4,N)
+header_f9=strarr(1)
+openr, 1, "Teff6000K_surf.pdat_original"
+readf, 1, header_f9
+readf, 1, f9
+close, 1
+
+g2=fltarr(4,N)
+header_g2=strarr(1)
+openr, 1, "G2V_surf.pdat_original"
+readf, 1, header_g2
+readf, 1, g2
+close, 1
+
+g8=fltarr(4,N)
+header_g8=strarr(1)
+openr, 1, "Teff5500K_surf.pdat_original"
+readf, 1, header_g8
+readf, 1, g8
+close, 1
+
+k2=fltarr(4,N)
+header_k2=strarr(1)
+openr, 1, "Teff5000K_surf.pdat_original"
+readf, 1, header_k2
+readf, 1, k2
+close, 1
+
+k5=fltarr(4,N)
+header_k5=strarr(1)
+openr, 1, "Teff4500K_surf.pdat_original"
+readf, 1, header_k5
+readf, 1, k5
+close, 1
+
+;; m2=fltarr(4,N)
+;; header_m2=strarr(1)
+;; openr, 1, "M2V_surf.pdat_original"
+;; readf, 1, header_m2
+;; readf, 1, m2
+;; close, 1
+
+;ff=2.5
+;fudgefactor=ff
+
+;; print,f0(1,0)
+;; print,f2(1,0)
+;; print,f5(1,0)
+;; print,f9(1,0)
+;; print,g2(1,0)
+;; print,g8(1,0)
+;; print,k2(1,0)
+;; print,k5(1,0)
+;; print,m2(1,0)
+
+;; print," "
+
+
+
+
+
+
+;a0(1,*)=a0(1,*)*seff(0)
+;a5(1,*)=a5(1,*)*seff(1)
+;a7(1,*)=a7(1,*)*seff(2)
+f0(1,*)=f0(1,*)*seff(3)
+f2(1,*)=f2(1,*)*seff(4)
+f5(1,*)=f5(1,*)*seff(5)
+f9(1,*)=f9(1,*)*seff(6)
+g2(1,*)=g2(1,*)*seff(7)
+g8(1,*)=g8(1,*)*seff(8)
+k2(1,*)=k2(1,*)*seff(9)
+k5(1,*)=k5(1,*)*seff(10)
+;m1(1,*)=m1(1,*)*seff(11)
+;m2(1,*)=m2(1,*)*seff(12)
+
+;; print,f0(1,0)
+;; print,f2(1,0)
+;; print,f5(1,0)
+;; print,f9(1,0)
+;; print,g2(1,0)
+;; print,g8(1,0)
+;; print,k2(1,0)
+;; print,k5(1,0)
+;; print,m2(1,0)
+
+
+
+openw, lun, "Teff7000K_surf.pdat",/get_lun
+printf,lun,header_f0
+for i=0,N1-1 do begin
+printf, lun, f0(0,i),f0(1,i),f0(2,i),f0(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+printf,lun,header
+for i=N1,N-1 do begin
+printf, lun, f0(0,i),f0(1,i),f0(2,i),f0(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+
+
+openw, lun, "Teff6750K_surf.pdat",/get_lun
+printf,lun,header_f2
+for i=0,N1-1 do begin
+printf, lun, f2(0,i),f2(1,i),f2(2,i),f2(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+printf,lun,header
+for i=N1,N-1 do begin
+printf, lun, f2(0,i),f2(1,i),f2(2,i),f2(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+openw, lun, "Teff6500K_surf.pdat",/get_lun
+printf,lun,header_f5
+for i=0,N1-1 do begin
+printf, lun, f5(0,i),f5(1,i),f5(2,i),f5(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+printf,lun,header
+for i=N1,N-1 do begin
+printf, lun, f5(0,i),f5(1,i),f5(2,i),f5(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+openw, lun, "Teff6000K_surf.pdat",/get_lun
+printf,lun,header_f9
+for i=0,N1-1 do begin
+printf, lun, f9(0,i),f9(1,i),f9(2,i),f9(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+printf,lun,header
+for i=N1,N-1 do begin
+printf, lun, f9(0,i),f9(1,i),f9(2,i),f9(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+openw, lun, "G2V_surf.pdat",/get_lun
+printf,lun,header_g2
+for i=0,N1-1 do begin
+printf, lun, g2(0,i),g2(1,i),g2(2,i),g2(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+printf,lun,header
+for i=N1,N-1 do begin
+printf, lun, g2(0,i),g2(1,i),g2(2,i),g2(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+openw, lun, "Teff5500K_surf.pdat",/get_lun
+printf,lun,header_g8
+for i=0,N1-1 do begin
+printf, lun, g8(0,i),g8(1,i),g8(2,i),g8(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+printf,lun,header
+for i=N1,N-1 do begin
+printf, lun, g8(0,i),g8(1,i),g8(2,i),g8(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+openw, lun, "Teff5000K_surf.pdat",/get_lun
+printf,lun,header_k2
+for i=0,N1-1 do begin
+printf, lun, k2(0,i),k2(1,i),k2(2,i),k2(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+printf,lun,header
+for i=N1,N-1 do begin
+printf, lun, k2(0,i),k2(1,i),k2(2,i),k2(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+openw, lun, "Teff4500K_surf.pdat",/get_lun
+printf,lun,header_k5
+for i=0,N1-1 do begin
+printf, lun, k5(0,i),k5(1,i),k5(2,i),k5(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+printf,lun,header
+for i=N1,N-1 do begin
+printf, lun, k5(0,i),k5(1,i),k5(2,i),k5(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+endfor
+free_lun, lun
+
+;; openw, lun, "M2V_surf.pdat",/get_lun
+;; printf,lun,header_m2
+;; for i=0,N1-1 do begin
+;; printf, lun, m2(0,i),m2(1,i),m2(2,i),m2(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+;; endfor
+;; printf,lun,header
+;; for i=N1,N-1 do begin
+;; printf, lun, m2(0,i),m2(1,i),m2(2,i),m2(3,i),format='(1x,i3,2x,1E11.4,2x,f6.0,1x,f6.0)'
+;; endfor
+;; free_lun, lun
+
+end
+
+
+
+
+
+pro seffuv,ff
+print, "Seff UV"
+print, "Fudge Factor ", ff
+
+seff=fltarr(13)
+;didn't calculate
+seff(0)= 1.09^ff;best guess  ;;A2
+seff(1)= 1.07^ff;best guess  ;;A5
+seff(2)= 1.0527^ff  ;;A7
+
+;calculated
+;; seff(3)= 1.03494^ff ;;F0
+;; seff(4)= 1.02844^ff ;;F2
+;; seff(5)= 1.01607^ff  ;;F5
+;; seff(6)= 1.0055^ff ;;F9
+;; seff(7)= 1.00177^ff ;;G2
+;; seff(8)= 0.99589^ff ;;G8
+;; seff(9)= 0.98919^ff ;;K2
+;; seff(10)= 0.96900^ff ;;K5
+
+;;; RAN NUMERICALLY TO DETERMINE SEFF TO GET 288 K Surface Temp
+
+seff(3)= 1.08965 ;;F0
+seff(4)= 1.05769 ;;F2
+seff(5)= 1.04899  ;;F5
+seff(6)= 1.01103 ;F9
+seff(7)= 1.00532 ;;G2
+seff(8)= 0.98772 ;;G8
+seff(9)= 0.967919 ;;K2
+seff(10)= 0.909853 ;;K5
+
+;didn't calculate
+seff(11)= 0.9717^ff ;;M1
+seff(12)=0.970404^ff;;? ;;M2
+
+N=10
+
+header="                  "
+
+f0=fltarr(2,N)
+header_f0=strarr(1)
+header1=strarr(1)
+header2=strarr(1)
+openr, 1, "faruv_Teff7000K.pdat_original"
+readf, 1, header_f0
+readf, 1, f0
+readf, 1, header1
+readf, 1, header1
+readf, 1, header2
+close, 1
+
+
+f2=fltarr(2,N)
+header_f2=strarr(1)
+openr, 1, "faruv_Teff6750K.pdat_original"
+readf, 1, header_f2
+readf, 1, f2
+close, 1
+
+f5=fltarr(2,N)
+header_f5=strarr(1)
+openr, 1, "faruv_Teff6500K.pdat_original"
+readf, 1, header_f5
+readf, 1, f5
+close, 1
+
+f9=fltarr(2,N)
+header_f9=strarr(1)
+openr, 1, "faruv_Teff6000K.pdat_original"
+readf, 1, header_f9
+readf, 1, f9
+close, 1
+
+g2=fltarr(2,N)
+header_g2=strarr(1)
+openr, 1, "faruv_G2V.pdat_original"
+readf, 1, header_g2
+readf, 1, g2
+close, 1
+
+g8=fltarr(2,N)
+header_g8=strarr(1)
+openr, 1, "faruv_Teff5500K.pdat_original"
+readf, 1, header_g8
+readf, 1, g8
+close, 1
+
+k2=fltarr(2,N)
+header_k2=strarr(1)
+openr, 1, "faruv_Teff5000K.pdat_original"
+readf, 1, header_k2
+readf, 1, k2
+close, 1
+
+k5=fltarr(2,N)
+header_k5=strarr(1)
+openr, 1, "faruv_Teff4500K.pdat_original"
+readf, 1, header_k5
+readf, 1, k5
+close, 1
+
+;; m2=fltarr(2,N)
+;; header_m2=strarr(1)
+;; openr, 1, "faruv_M2V.pdat_original"
+;; readf, 1, header_m2
+;; readf, 1, m2
+;; close, 1
+
+;;ff=2.5
+;fudgefactor=ff
+
+;; print,f0(1,0)
+;; print,f2(1,0)
+;; print,f5(1,0)
+;; print,f9(1,0)
+;; print,g2(1,0)
+;; print,g8(1,0)
+;; print,k2(1,0)
+;; print,k5(1,0)
+;; print,m2(1,0)
+
+;; print," "
+
+
+
+
+
+;a0(1,*)=a0(1,*)*seff(0)
+;a5(1,*)=a5(1,*)*seff(1)
+;a7(1,*)=a7(1,*)*seff(2)
+f0(1,*)=f0(1,*)*seff(3)
+f2(1,*)=f2(1,*)*seff(4)
+f5(1,*)=f5(1,*)*seff(5)
+f9(1,*)=f9(1,*)*seff(6)
+g2(1,*)=g2(1,*)*seff(7)
+g8(1,*)=g8(1,*)*seff(8)
+k2(1,*)=k2(1,*)*seff(9)
+k5(1,*)=k5(1,*)*seff(10)
+;m1(1,*)=m1(1,*)*seff(11)
+;m2(1,*)=m2(1,*)*seff(12)
+
+;; print,f0(1,0)
+;; print,f2(1,0)
+;; print,f5(1,0)
+;; print,f9(1,0)
+;; print,g2(1,0)
+;; print,g8(1,0)
+;; print,k2(1,0)
+;; print,k5(1,0)
+;; print,m2(1,0)
+
+openw, lun, "faruv_Teff7000K.pdat",/get_lun
+printf,lun,header_f0
+printf,lun,header
+for i=0,N-1 do begin
+printf, lun, f0(0,i),f0(1,i),format='(1x,i4,2x,1E8.1)'
+endfor
+printf, lun,header
+printf, lun, header1
+printf, lun, header2
+free_lun, lun
+
+
+openw, lun, "faruv_Teff6750K.pdat",/get_lun
+printf,lun,header_f2
+printf,lun,header
+for i=0,N-1 do begin
+printf, lun, f2(0,i),f2(1,i),format='(1x,i4,2x,1E8.1)'
+endfor
+printf, lun,header
+printf, lun, header1
+printf, lun, header2
+free_lun, lun
+
+openw, lun, "faruv_Teff6500K.pdat",/get_lun
+printf,lun,header_f5
+printf,lun,header
+for i=0,N-1 do begin
+printf, lun, f5(0,i),f5(1,i),format='(1x,i4,2x,1E8.1)'
+endfor
+printf, lun,header
+printf, lun, header1
+printf, lun, header2
+free_lun, lun
+
+openw, lun, "faruv_Teff6000K.pdat",/get_lun
+printf,lun,header_f9
+printf,lun,header
+for i=0,N-1 do begin
+printf, lun, f9(0,i),f9(1,i),format='(1x,i4,2x,1E8.1)'
+endfor
+printf, lun,header
+printf, lun, header1
+printf, lun, header2
+free_lun, lun
+
+openw, lun, "faruv_G2V.pdat",/get_lun
+printf,lun,header_g2
+printf,lun,header
+for i=0,N-1 do begin
+printf, lun, g2(0,i),g2(1,i),format='(1x,i4,2x,1E8.1)'
+endfor
+printf, lun,header
+printf, lun, header1
+printf, lun, header2
+free_lun, lun
+
+openw, lun, "faruv_Teff5500K.pdat",/get_lun
+printf,lun,header_g8
+printf,lun,header
+for i=0,N-1 do begin
+printf, lun, g8(0,i),g8(1,i),format='(1x,i4,2x,1E8.1)'
+endfor
+printf, lun,header
+printf, lun, header1
+printf, lun, header2
+free_lun, lun
+
+openw, lun, "faruv_Teff5000K.pdat",/get_lun
+printf,lun,header_k2
+printf,lun,header
+for i=0,N-1 do begin
+printf, lun, k2(0,i),k2(1,i),format='(1x,i4,2x,1E8.1)'
+endfor
+printf, lun,header
+printf, lun, header1
+printf, lun, header2
+free_lun, lun
+
+openw, lun, "faruv_Teff4500K.pdat",/get_lun
+printf,lun,header_k5
+printf,lun,header
+for i=0,N-1 do begin
+printf, lun, k5(0,i),k5(1,i),format='(1x,i4,2x,1E8.1)'
+endfor
+printf, lun,header
+printf, lun, header1
+printf, lun, header2
+free_lun, lun
+
+
+;; openw, lun, "faruv_M2V.pdat",/get_lun
+;; printf,lun,header_m2
+;; printf,lun,header
+;; for i=0,N-1 do begin
+;; printf, lun, m2(0,i),m2(1,i),format='(1x,i4,2x,1E8.1)'
+;; endfor
+;; printf, lun,header
+;; printf, lun, header1
+;; printf, lun, header2
+;; free_lun, lun
+
+
+end
+
+pro seff;, ff
+ff=1.0
+seffphoto,ff
+seffsurf,ff
+seffuv,ff
+
+print, "Photo, Surf, and Faruv files have been corrected."
+
+end

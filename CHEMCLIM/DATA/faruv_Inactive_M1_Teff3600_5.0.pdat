@@ -1,0 +1,15 @@
+   L     SFX(L)
+
+ 1725   7.3E+04
+ 1675   2.6E+04
+ 1625   1.2E+04
+ 1575   5.4E+03
+ 1525   2.6E+03
+ 1475   1.3E+03
+ 1425   3.5E+02
+ 1375   5.8E+01
+ 1325   1.2E+01
+ 1216   3.2E-01
+
+Far UV flux in photons/s^2/cm/A
+The flux at Ly alpha is divided by 50
