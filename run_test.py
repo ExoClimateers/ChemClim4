@@ -274,7 +274,7 @@ for l in range(len(fluxfac)):                                          # loop ov
             else:
                 os.system("make -B")
             # wait for keypress to confirm that the compilation was ok
-            #    raw_input('Press Enter if compilation was ok...') # NOTE:: not used right now, but we can make it optional with a flag
+            raw_input('Press Enter if compilation was ok...') # NOTE:: not used right now, but we can make it optional with a flag
             # running the code
             os.system("./couple")
             # renaming output files
