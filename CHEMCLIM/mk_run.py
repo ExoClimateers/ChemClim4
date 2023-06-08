@@ -12,5 +12,4 @@ os.system("cp * " + test_dir + run_label + 'CHEMCLIM/')
 ####
 # Autorun script
 ####
-import 
-import 
+import  test_dir + run_label + 'CHEMCLIM/run_tes.py'
