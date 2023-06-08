@@ -283,7 +283,7 @@ for l in range(len(fluxfac)):                                          # loop ov
             # wait for keypress to confirm that the compilation was ok
             #    raw_input('Press Enter if compilation was ok...') # NOTE:: not used right now, but we can make it optional with a flag
             # running the code
-            os.system("./COUPLE")
+            os.system("./couple")
             # renaming output files
             os.system("cp IO/outchem.dat IO/outchem_"            +namek+"_ff"+str(fluxfac[l])+".dat\n")
             os.system("cp IO/output_couple.dat IO/output_couple_"+namek+"_ff"+str(fluxfac[l])+".dat")

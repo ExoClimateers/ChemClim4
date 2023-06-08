@@ -304,7 +304,7 @@ for l in range(len(fluxfac)):
             if makeB == 1:
                 os.system("make -B")
             else:
-                os.system("make B")
+                os.system("make -B")
 	
 # wait for keypress to confirm that the compilation was ok
 #    raw_input('Press Enter if compilation was ok...')
