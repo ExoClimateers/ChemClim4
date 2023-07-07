@@ -8,13 +8,14 @@ Please note that you might need to install the required Python libraries (numpy 
 '''
 import numpy as np
 import matplotlib.pyplot as plt
+from astropy.table import Table
 
 def power10(value):
     value_ii = int(np.log10(value))
     num = np.around((value / 10**(value_ii)) * 100) / 100
     return f"10^{value_ii}"
 
-fname = 'Sun_100'
+fname = 'Sun_1.0_200_ff1.0'
 skip = 20
 
 # Create a directory for the frames
@@ -25,6 +26,7 @@ os.makedirs(f"animation_{fname}", exist_ok=True)
 with open(f"IO/clima_calls_{fname}.tab", 'r') as file:
     lines = file.readlines()
 niter = int(lines[-1].split()[1])
+print(niter)
 
 clima_calls = np.zeros(niter)
 
@@ -40,71 +42,79 @@ print(np.sum(clima_calls) / skip)
 with open(f"IO/clima_allout_{fname}.tab", 'r') as file:
     lines = file.readlines()
 
-res = lines[3].split('=')[1].split()
-print(res[0], res[1], '=', res[2])
-print(res[3], '=', res[4])
-print(res[5], '=', res[6])
-print(res[7], '=', res[8])
-print(res[9], '=', res[10])
-print(res[11], '=', res[12])
-print(res[13], '=', res[14])
+nverti     = int(lines[5])    # Num vertical lines
+# niter      = 200              # Num iters
+line       = 6                # Data starting line
+i          = 1                # Starting iter
+num_lines  = len(lines)       # Total number of lines
+block_size = 8 + (2 * nverti) # Num lines in each iter
 
-nverti = int(lines[4])
 
-# Initialize arrays to store variables
-data_start = 15
-data_end = data_start + niter * (nverti + 3) + 1
+J      = np.zeros((niter // skip + 1, nverti))
+P      = np.zeros((niter // skip + 1, nverti))
+ALT    = np.zeros((niter // skip + 1, nverti))
+T      = np.zeros((niter // skip + 1, nverti))
+CONVEC = np.zeros((niter // skip + 1, nverti))
+DT     = np.zeros((niter // skip + 1, nverti))
+TOLD   = np.zeros((niter // skip + 1, nverti))
+FH2O   = np.zeros((niter // skip + 1, nverti))
+TCOOL  = np.zeros((niter // skip + 1, nverti))
+THEAT  = np.zeros((niter // skip + 1, nverti))
+FO3    = np.zeros((niter // skip + 1, nverti))
 
-J = np.zeros((niter // skip, nverti))
-P = np.zeros((niter // skip, nverti))
-ALT = np.zeros((niter // skip, nverti))
-T = np.zeros((niter // skip, nverti))
-CONVEC = np.zeros((niter // skip, nverti))
-DT = np.zeros((niter // skip, nverti))
-TOLD = np.zeros((niter // skip, nverti))
-FH2O = np.zeros((niter // skip, nverti))
-TCOOL = np.zeros((niter // skip, nverti))
-THEAT = np.zeros((niter // skip, nverti))
-FO3 = np.zeros((niter // skip, nverti))
+PF     = np.zeros((niter // skip + 1, nverti))
+FTOTAL = np.zeros((niter // skip + 1, nverti))
+FTIR   = np.zeros((niter // skip + 1, nverti))
+FDNIR  = np.zeros((niter // skip + 1, nverti))
+FUPIR  = np.zeros((niter // skip + 1, nverti))
+FTSOL  = np.zeros((niter // skip + 1, nverti))
+FDNSOL = np.zeros((niter // skip + 1, nverti))
+FUPSOL = np.zeros((niter // skip + 1, nverti))
+DIVF   = np.zeros((niter // skip + 1, nverti))
 
-PF = np.zeros((niter // skip, nverti))
-FTOTAL = np.zeros((niter // skip, nverti))
-FTIR = np.zeros((niter // skip, nverti))
-FDNIR = np.zeros((niter // skip, nverti))
-FUPIR = np.zeros((niter // skip, nverti))
-FTSOL = np.zeros((niter // skip, nverti))
-FDNSOL = np.zeros((niter // skip, nverti))
-FUPSOL = np.zeros((niter // skip, nverti))
-DIVF = np.zeros((niter // skip, nverti))
 
-for i in range(niter // skip):
-    for j in range(nverti):
-        line = lines[data_start + i * (nverti + 3) + j]
-        values = line.split()
-        J[i, j] = float(values[0])
-        P[i, j] = float(values[1])
-        ALT[i, j] = float(values[2])
-        T[i, j] = float(values[3])
-        CONVEC[i, j] = float(values[4])
-        DT[i, j] = float(values[5])
-        TOLD[i, j] = float(values[6])
-        FH2O[i, j] = float(values[7])
-        TCOOL[i, j] = float(values[8])
-        THEAT[i, j] = float(values[9])
-        FO3[i, j] = float(values[10])
-        PF[i, j] = float(values[11])
-        FTOTAL[i, j] = float(values[12])
-        FTIR[i, j] = float(values[13])
-        FDNIR[i, j] = float(values[14])
-        FUPIR[i, j] = float(values[15])
-        FTSOL[i, j] = float(values[16])
-        FDNSOL[i, j] = float(values[17])
-        FUPSOL[i, j] = float(values[18])
-        DIVF[i, j] = float(values[19])
+while i <= niter // skip  + 1 :
+    iter_lines = lines[line : line + block_size]
+    colnames = iter_lines[ 4 ].split()
+    colnames.append('FO3')
+    tab1       = Table(np.array([l.split() for l in iter_lines[5  : 205]]).astype(float),   names = colnames)
+    tab2       = Table(np.array([l.split() for l in iter_lines[207: 407]]).astype(float),   names = iter_lines[206].split())
+    if i == 1:
+        print(tab1.colnames)
+        print(tab2.colnames)
+    J[     i - 1, :] = np.array(tab1['J'])
+    P[     i - 1, :] = np.array(tab1['P'])
+    ALT[   i - 1, :] = np.array(tab1['ALT'])
+    T[     i - 1, :] = np.array(tab1['T'])
+    CONVEC[i - 1, :] = np.array(tab1['CONVEC'])
+    DT[    i - 1, :] = np.array(tab1['DT'])
+    TOLD[  i - 1, :] = np.array(tab1['TOLD'])
+    FH2O[  i - 1, :] = np.array(tab1['FH20'])
+    TCOOL[ i - 1, :] = np.array(tab1['TCOOL'])
+    THEAT[ i - 1, :] = np.array(tab1['THEAT'])
+    FO3[   i - 1, :] = np.array(tab1['FO3'])
+
+
+    PF[    i - 1, :] = np.array(tab2['PF'])
+    FTOTAL[i - 1, :] = np.array(tab2['FTOTAL'])
+    FTIR[  i - 1, :] = np.array(tab2['FTIR'])
+    FDNIR[ i - 1, :] = np.array(tab2['FDNIR'])
+    FUPIR[ i - 1, :] = np.array(tab2['FUPIR'])
+    FTSOL[ i - 1, :] = np.array(tab2['FTSOL'])
+    FDNSOL[i - 1, :] = np.array(tab2['FDNSOL'])
+    FUPSOL[i - 1, :] = np.array(tab2['FUPSOL'])
+    DIVF[  i - 1, :] = np.array(tab2['DIVF'])
+
+    if i == niter // skip:
+        line      += (skip - 1) * block_size
+    else:
+        line      += skip * block_size
+    i         += 1
+
 
 # Generate plot for each variable
-for i in range(niter // skip):
-    plt.figure(figsize=(10, 6))
+for i in range(niter // skip + 1):
+    plt.figure(figsize=(10, 10))
 
     # Temperature profile
     plt.subplot(2, 2, 1)
