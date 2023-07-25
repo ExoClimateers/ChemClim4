@@ -179,6 +179,16 @@
         OPEN(unit=75,
      &  file=dirDATA//'/Active_M9_Teff2300_photo.pdat')
 
+      case('J25')
+        OPEN(unit=76,
+     &  file=dirDATA//'/faruv_T2500ph_musc.pdat')
+        OPEN(unit=75,
+     &  file=dirDATA//'/T2500ph_musc_photo.pdat')
+       case('J07')
+        OPEN(unit=76,
+     &  file=dirDATA//'/faruv_T700ph_musc.pdat')
+        OPEN(unit=75,
+     &  file=dirDATA//'/T700ph_musc_photo.pdat')
 
 
        case('Ep0')
