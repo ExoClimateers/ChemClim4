@@ -190,6 +190,16 @@
         OPEN(unit=75,
      &  file=dirDATA//'/T700ph_musc_photo.pdat')
 
+      case('U25')
+         OPEN(unit=76,
+     &  file=dirDATA//'/faruv_T2500ph_musc.pdat')
+         OPEN(unit=75,
+     &  file=dirDATA//'/T2500ph_musc_photo.pdat')
+      case('U07')
+         OPEN(unit=76,
+     &  file=dirDATA//'/faruv_T700ph_aur.pdat')
+         OPEN(unit=75,
+     &  file=dirDATA//'/T700ph_aur_photo.pdat')
 
        case('Ep0')
         OPEN(unit=76, file= dirDATA//'/faruv_Epoch0.pdat')

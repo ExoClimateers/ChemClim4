@@ -91,6 +91,11 @@ c This subroutine reads the spectra from stars other than the SUN
       IF(STARR=="J07")OPEN(UNIT=46,
      & FILE=dirDATA//'/T700ph_musc_surf.pdat')
 
+      IF(STARR=="U25")OPEN(UNIT=46,
+     & FILE=dirDATA//'/T2500ph_aur_surf.pdat')
+      IF(STARR=="U07")OPEN(UNIT=46,
+     & FILE=dirDATA//'/T700ph_aur_surf.pdat')
+
        READ(46,*)
        DO j=1,NSOLUV
          READ(46,*)xl,xf,x,x
