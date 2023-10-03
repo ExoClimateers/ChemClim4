@@ -45,9 +45,9 @@ fluxfac=[1.0] # distance scaling. Scale flux of stellar input by the inverse squ
 # The old temperatures, heat capacities, time step, surface gravity, the pressure grid, and the fluxes
 
 # couple.f parameters:
-NITER=2     # number of total iterations
-NSTEPSC=100 # number of times the climate code is called
-NSTEPSP=100 # number of times the photochemistry is called 
+NITER=300     # number of total iterations
+NSTEPSC=200 # number of times the climate code is called
+NSTEPSP=400 # number of times the photochemistry is called 
 
 '''
 TODO: see if any of these old commented out values are useful and then clean up
@@ -66,8 +66,8 @@ TG0=288.                            # initial surface temperature in K
 TSTRAT=200.                         # initial stratosphere temperature in K
 
 #atm_chem input parameters:
-height=68.                          # height of the atmosphere [km]. requires some experimenting
-ND=[100]                            # number of altitude layers in altitude grid
+height=90.                          # height of the atmosphere [km]. requires some experimenting
+ND=[180]                            # number of altitude layers in altitude grid
 NZ=ND                               #
 delz=[]                             # 'Delta Z' 
 JTROP=[]                            # J troposphere
